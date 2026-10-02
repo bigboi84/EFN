@@ -52,6 +52,9 @@ img,
 svg {
   max-width: 100%;
 }
+img {
+  height: auto;
+}
 a {
   color: inherit;
 }
@@ -2814,8 +2817,12 @@ p {
 .zd__photo img {
   display: block;
   width: 100%;
-  aspect-ratio: 21 / 9;
+  height: 100%;
+  aspect-ratio: auto;
   object-fit: cover;
+}
+.zd__photo {
+  height: clamp(150px, 16vw, 210px);
 }
 .zd__photo::after {
   content: "";
@@ -4119,5 +4126,28 @@ main {
 @media (min-width: 1321px) and (max-width: 1520px) {
   .hud__cta {
     display: none;
+  }
+}
+
+/* Zone select: picker and detail panel share one height */
+@media (min-width: 901px) {
+  .zones__grid {
+    align-items: stretch;
+  }
+  .zones__picker,
+  .zones__detail-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .zones__tiles {
+    flex: 1;
+    grid-auto-rows: 1fr;
+  }
+  .zones__detail {
+    flex: 1;
+    min-height: 0;
+  }
+  .zd {
+    gap: 18px;
   }
 }
