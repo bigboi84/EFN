@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { animate, motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
-import { ChevronRight } from "lucide-react";
-import { TARGETS, HERO_SLIDES } from "../data";
-import { ease, Photo } from "./ui";
+import { animate, motion, AnimatePresence, useInView, useScroll, useTransform, useReducedMotion } from "motion/react";
+import { ChevronRight, Pause, Play } from "lucide-react";
+import { TARGETS } from "../data";
+import { ease, Photo, mediaUrl } from "./ui";
 
 const WORDS = ["Esports", "Food", "Game Shows", "Finals", "Trivia", "Scrims", "Family Fun"];
 
@@ -39,14 +39,21 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const gridY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const photoY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const [slide, setSlide] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const reduce = useReducedMotion();
+  const video = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(true);
 
-  useEffect(() => {
-    if (paused) return;
-    const t = setInterval(() => setSlide((x) => (x + 1) % HERO_SLIDES.length), 6000);
-    return () => clearInterval(t);
-  }, [paused, slide]);
+  const togglePlay = () => {
+    const v = video.current;
+    if (!v) return;
+    if (v.paused) {
+      void v.play().catch(() => {});
+      setPlaying(true);
+    } else {
+      v.pause();
+      setPlaying(false);
+    }
+  };
 
   useEffect(() => {
     const t = setInterval(() => setI((x) => (x + 1) % WORDS.length), 1900);
@@ -57,53 +64,36 @@ export function Hero() {
     <section className="hero" id="top" ref={ref}>
       <div className="hero__bg" aria-hidden="true">
         <motion.div className="hero__photos" style={{ y: photoY }}>
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={slide}
-              className="hero__photo"
-              initial={{ opacity: 0, scale: 1.12 }}
-              animate={{ opacity: 1, scale: 1.02 }}
-              exit={{ opacity: 0 }}
-              transition={{ opacity: { duration: 1.2 }, scale: { duration: 7.5, ease: "linear" } }}
+          {reduce ? (
+            <div className="hero__photo">
+              <Photo name="oval-wide" alt="" eager />
+            </div>
+          ) : (
+            <video
+              ref={video}
+              className="hero__video"
+              poster={mediaUrl("hero-poster.webp")}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
             >
-              <Photo name={HERO_SLIDES[slide].image} alt="" eager={slide === 0} />
-            </motion.div>
-          </AnimatePresence>
+              <source src={mediaUrl("hero-loop.webm")} type="video/webm" />
+              <source src={mediaUrl("hero-loop.mp4")} type="video/mp4" />
+            </video>
+          )}
         </motion.div>
         <div className="hero__scan" />
         <motion.div className="hero__grid" style={{ y: gridY }} />
         <div className="hero__haze" />
       </div>
 
-      <div className="hero__slides wrap" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={slide}
-            className="hero__caption"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.35 }}
-            aria-live="polite"
-          >
-            <span className="px">{HERO_SLIDES[slide].tag}</span>
-            {HERO_SLIDES[slide].caption}
-          </motion.p>
-        </AnimatePresence>
-        <div className="hero__pips" role="group" aria-label="Choose photo">
-          {HERO_SLIDES.map((sl, k) => (
-            <button
-              key={sl.image}
-              className={`pip-btn ${k === slide ? "is-on" : ""}`}
-              onClick={() => setSlide(k)}
-              aria-label={`Show photo ${k + 1}: ${sl.tag}`}
-              aria-current={k === slide}
-            >
-              {k === slide && !paused && <span key={slide} className="pip-btn__fill" />}
-            </button>
-          ))}
-        </div>
-      </div>
+      {!reduce && (
+        <button className="hero__playbtn" onClick={togglePlay} aria-label={playing ? "Pause background video" : "Play background video"}>
+          {playing ? <Pause size={16} /> : <Play size={16} />}
+        </button>
+      )}
 
       <div className="wrap hero__inner">
         <div className="hero__copy">
