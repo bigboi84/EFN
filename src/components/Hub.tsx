@@ -27,7 +27,7 @@ export function Hub() {
     <Section id="hub" className="hub" achievement="Big picture: the flywheel is spinning">
       <div className="wrap">
         <SectionHead
-          level="03"
+          level="07"
           kicker="Structure"
           title={
             <>

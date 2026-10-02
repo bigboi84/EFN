@@ -22,7 +22,7 @@ export function Schedule() {
     <Section id="schedule" className="schedule" achievement="Every day counts: the calendar is full">
       <div className="wrap">
         <SectionHead
-          level="04"
+          level="08"
           kicker="How it runs"
           title={
             <>

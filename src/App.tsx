@@ -6,6 +6,7 @@ import { Hud } from "./components/Hud";
 import { Hero, Ticker } from "./components/Hero";
 import { What, Zones } from "./components/Zones";
 import { Hub } from "./components/Hub";
+import { Bowl, Cafe, Floor, GameShow } from "./components/Spaces";
 import { Schedule } from "./components/Schedule";
 import { Modes } from "./components/Modes";
 import { Membership, Standards } from "./components/Membership";
@@ -91,6 +92,10 @@ export default function App() {
                 <Hero />
                 <Ticker />
                 <What />
+                <Bowl />
+                <Cafe />
+                <Floor />
+                <GameShow />
                 <Zones />
                 <Hub />
                 <Schedule />

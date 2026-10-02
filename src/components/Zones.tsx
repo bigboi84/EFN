@@ -2,7 +2,7 @@ import { useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, type MotionValue } from "motion/react";
 import { Handshake } from "lucide-react";
 import { ZONES } from "../data";
-import { Section, SectionHead, Reveal, ease } from "./ui";
+import { Section, SectionHead, Reveal, ease, Photo } from "./ui";
 import { sfx } from "../lib/sound";
 
 const VERBS = ["Train", "Compete", "Watch", "Eat", "Meet"];
@@ -75,7 +75,7 @@ export function Zones() {
     <Section id="zones" className="zones" achievement="Zone explorer: six zones discovered">
       <div className="wrap">
         <SectionHead
-          level="02"
+          level="06"
           kicker="The Arena & Lounge"
           title={
             <>
@@ -136,6 +136,11 @@ export function Zones() {
                   transition={{ duration: 0.28, ease }}
                   className="zd"
                 >
+                  {zone.image && (
+                    <div className="zd__photo">
+                      <Photo name={zone.image} alt="" sizes="(max-width: 900px) 100vw, 50vw" />
+                    </div>
+                  )}
                   <div className="zd__top">
                     <motion.div
                       className="zd__emblem"

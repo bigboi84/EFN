@@ -81,3 +81,34 @@ export function Section({
     </motion.section>
   );
 }
+
+export const mediaUrl = (file: string) => `${import.meta.env.BASE_URL}media/${file}`;
+
+/** Responsive WebP photo: `name` maps to media/name.webp and media/name-sm.webp. */
+export function Photo({
+  name,
+  alt,
+  className,
+  sizes = "100vw",
+  eager = false,
+}: {
+  name: string;
+  alt: string;
+  className?: string;
+  sizes?: string;
+  eager?: boolean;
+}) {
+  return (
+    <img
+      className={className}
+      src={mediaUrl(`${name}.webp`)}
+      srcSet={`${mediaUrl(`${name}-sm.webp`)} 960w, ${mediaUrl(`${name}.webp`)} 1920w`}
+      sizes={sizes}
+      alt={alt}
+      width={1920}
+      height={1086}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+    />
+  );
+}

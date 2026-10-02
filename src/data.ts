@@ -29,11 +29,13 @@ export type Zone = {
   offers: string;
   usedFor: string[];
   partnerFit: string;
+  image?: string;
 };
 
 export const ZONES: Zone[] = [
   {
     id: "floor",
+    image: "game-wide",
     name: "Gaming Floor",
     short: "Floor",
     icon: Monitor,
@@ -45,6 +47,7 @@ export const ZONES: Zone[] = [
   },
   {
     id: "cafe",
+    image: "food-kitchen",
     name: "Café",
     short: "Café",
     icon: UtensilsCrossed,
@@ -56,6 +59,7 @@ export const ZONES: Zone[] = [
   },
   {
     id: "stage",
+    image: "food-watchparty",
     name: "Stage & Screens",
     short: "Stage",
     icon: Mic2,
@@ -67,6 +71,7 @@ export const ZONES: Zone[] = [
   },
   {
     id: "family",
+    image: "show-still",
     name: "Family Game-Show Zone",
     short: "Game Show",
     icon: PartyPopper,
@@ -89,6 +94,7 @@ export const ZONES: Zone[] = [
   },
   {
     id: "private",
+    image: "food-sofa",
     name: "Private Room",
     short: "Private",
     icon: DoorClosed,
@@ -258,10 +264,36 @@ export const TO_CONFIRM = [
 ];
 
 export const NAV = [
-  { id: "zones", label: "Zones" },
-  { id: "hub", label: "The Hub" },
-  { id: "schedule", label: "Schedule" },
+  { id: "bowl", label: "The Bowl" },
+  { id: "cafe", label: "Café" },
+  { id: "floor", label: "Gaming" },
+  { id: "gameshow", label: "Game Show" },
   { id: "modes", label: "Tournaments" },
   { id: "membership", label: "Membership" },
   { id: "partners", label: "Partners" },
+];
+
+export const HERO_SLIDES = [
+  { image: "food-dining", tag: "The Café", caption: "Pizza, burgers and wings, with the game on every screen" },
+  { image: "oval-booth", tag: "Dine above the action", caption: "Raised booths behind glass, looking straight down on the gaming pit" },
+  { image: "food-sofa", tag: "Lounge", caption: "Sink into the sofas, grab a controller, share a pie" },
+  { image: "food-booth", tag: "Booths", caption: "Your crew, your table, a front-row view of the action" },
+  { image: "food-kitchen", tag: "Open kitchen", caption: "Wood-fired pizza and smash burgers, made in front of you" },
+  { image: "food-overview", tag: "The whole Arena", caption: "Dining, gaming, a stage and a game show under one roof" },
+];
+
+export const MENU = ["Wood-fired pizza", "Smash burgers", "Wings & dips", "Loaded fries", "Mocktails & sodas"];
+
+export const FLOOR_SPECS = [
+  { k: "32", v: "Console stations" },
+  { k: "2", v: "Banks of 16" },
+  { k: "8 + 8", v: "Back to back per bank" },
+  { k: "1", v: "Big monitoring screen" },
+];
+
+export const SHOW_FEATURES = [
+  { title: "Spin the wheel", body: "A full-size prize wheel decides the round, the points and the bragging rights." },
+  { title: "Buzzer podiums", body: "Light-up podiums with real buzzers and live scores for every team." },
+  { title: "Team trivia & Feud-style rounds", body: "Family Feud-style survey rounds and trivia boards built for groups." },
+  { title: "Party-ready", body: "Family nights, birthdays, office teams and group bookings." },
 ];

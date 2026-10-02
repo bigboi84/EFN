@@ -8,6 +8,7 @@ export function Hud() {
   const { scrollYProgress } = useScroll();
   const xp = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
   const [active, setActive] = useState("");
+  const [level, setLevel] = useState(1);
   const [muted, setM] = useState(isMuted());
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -16,7 +17,11 @@ export function Hud() {
     const els = Array.from(document.querySelectorAll<HTMLElement>("[data-section]"));
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => e.isIntersecting && setActive(e.target.id));
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          setActive(e.target.id);
+          setLevel(els.indexOf(e.target as HTMLElement) + 1);
+        });
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
@@ -30,7 +35,6 @@ export function Hud() {
     };
   }, []);
 
-  const level = Math.max(1, NAV.findIndex((n) => n.id === active) + 2);
 
   const toggleSound = () => {
     const next = !muted;

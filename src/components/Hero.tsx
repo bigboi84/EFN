@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ChevronRight } from "lucide-react";
-import { TARGETS } from "../data";
-import { ease } from "./ui";
+import { ChevronRight } from "lucide-react";
+import { TARGETS, HERO_SLIDES } from "../data";
+import { ease, Photo } from "./ui";
 
 const WORDS = ["Esports", "Food", "Game Shows", "Finals", "Trivia", "Scrims", "Family Fun"];
 
@@ -38,7 +38,15 @@ export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const gridY = useTransform(scrollYProgress, [0, 1], [0, 160]);
-  const sunY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const [slide, setSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setSlide((x) => (x + 1) % HERO_SLIDES.length), 6000);
+    return () => clearInterval(t);
+  }, [paused, slide]);
 
   useEffect(() => {
     const t = setInterval(() => setI((x) => (x + 1) % WORDS.length), 1900);
@@ -48,9 +56,53 @@ export function Hero() {
   return (
     <section className="hero" id="top" ref={ref}>
       <div className="hero__bg" aria-hidden="true">
-        <motion.div className="hero__sun" style={{ y: sunY }} />
+        <motion.div className="hero__photos" style={{ y: photoY }}>
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={slide}
+              className="hero__photo"
+              initial={{ opacity: 0, scale: 1.12 }}
+              animate={{ opacity: 1, scale: 1.02 }}
+              exit={{ opacity: 0 }}
+              transition={{ opacity: { duration: 1.2 }, scale: { duration: 7.5, ease: "linear" } }}
+            >
+              <Photo name={HERO_SLIDES[slide].image} alt="" eager={slide === 0} />
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+        <div className="hero__scan" />
         <motion.div className="hero__grid" style={{ y: gridY }} />
         <div className="hero__haze" />
+      </div>
+
+      <div className="hero__slides wrap" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={slide}
+            className="hero__caption"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.35 }}
+            aria-live="polite"
+          >
+            <span className="px">{HERO_SLIDES[slide].tag}</span>
+            {HERO_SLIDES[slide].caption}
+          </motion.p>
+        </AnimatePresence>
+        <div className="hero__pips" role="group" aria-label="Choose photo">
+          {HERO_SLIDES.map((sl, k) => (
+            <button
+              key={sl.image}
+              className={`pip-btn ${k === slide ? "is-on" : ""}`}
+              onClick={() => setSlide(k)}
+              aria-label={`Show photo ${k + 1}: ${sl.tag}`}
+              aria-current={k === slide}
+            >
+              {k === slide && !paused && <span key={slide} className="pip-btn__fill" />}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="wrap hero__inner">
@@ -168,9 +220,6 @@ export function Hero() {
         </motion.aside>
       </div>
 
-      <a href="#what" className="hero__scroll px" aria-label="Scroll to learn more">
-        <ArrowDown size={14} /> Scroll
-      </a>
     </section>
   );
 }

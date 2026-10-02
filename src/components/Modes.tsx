@@ -11,7 +11,7 @@ export function Modes() {
     <Section id="modes" className="modes" achievement="Game modes unlocked: home, away, online">
       <div className="wrap">
         <SectionHead
-          level="05"
+          level="09"
           kicker="Tournament circuit"
           title={
             <>

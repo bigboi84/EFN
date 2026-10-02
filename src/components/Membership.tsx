@@ -70,7 +70,7 @@ export function Membership() {
     <Section id="membership" className="membership" achievement="Tier unlocked: welcome to the club">
       <div className="wrap">
         <SectionHead
-          level="06"
+          level="10"
           kicker="Paid membership"
           title={
             <>
@@ -109,7 +109,7 @@ export function Standards() {
       <div className="wrap standards__inner">
         <div>
           <SectionHead
-            level="07"
+            level="11"
             kicker="Standards"
             title={
               <>

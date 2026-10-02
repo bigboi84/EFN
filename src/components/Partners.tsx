@@ -17,7 +17,7 @@ export function Partners() {
     <Section id="partners" className="partners" achievement="Power-up found: partner opportunities">
       <div className="wrap">
         <SectionHead
-          level="08"
+          level="12"
           kicker="For sponsors & partners"
           title={
             <>
@@ -73,7 +73,7 @@ export function NextLevel() {
     <Section id="next" className="next">
       <div className="wrap">
         <SectionHead
-          level="09"
+          level="13"
           kicker="Before launch"
           title={
             <>
