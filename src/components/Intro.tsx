@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { animate, motion, useMotionValue, useReducedMotion, AnimatePresence } from "motion/react";
 import { Token } from "./Token";
+import { GameScene } from "./GameScene";
 import { sfx, unlockAudio } from "../lib/sound";
 
 type Phase = "idle" | "inserting" | "loading" | "ready" | "entering";
@@ -108,8 +109,9 @@ export function Intro({ onDone }: { onDone: () => void }) {
       const dx = window.innerWidth / 2 - (s.left + s.width / 2);
       const dy = window.innerHeight / 2 - (s.top + s.height / 2);
       const scale = Math.max(window.innerWidth / s.width, window.innerHeight / s.height) * 1.08;
-      await new Promise((r) => setTimeout(r, 650));
-      await animate(cab, { x: dx, y: dy, scale }, { duration: 1.05, ease: [0.7, 0, 0.84, 0] });
+      await new Promise((r) => setTimeout(r, 900));
+      await animate(cab, { x: dx, y: dy, scale }, { duration: 1.0, ease: [0.65, 0, 0.35, 1] });
+      await new Promise((r) => setTimeout(r, 1150));
     } else {
       await new Promise((r) => setTimeout(r, 400));
     }
@@ -222,7 +224,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
                       <div className="px scr__pct">{String(progress).padStart(3, "0")}%</div>
                     </motion.div>
                   )}
-                  {(phase === "ready" || phase === "entering") && (
+                  {phase === "ready" && (
                     <motion.div
                       key="ready"
                       className="scr scr--ready"
@@ -232,7 +234,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
                     >
                       <div className="scr__player px">PLAYER 1</div>
                       <button
-                        className={`scr__start px ${phase === "entering" ? "is-pressed" : ""}`}
+                        className="scr__start px"
                         onClick={(e) => {
                           e.stopPropagation();
                           pressStart();
@@ -246,7 +248,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
                   )}
                 </AnimatePresence>
               </div>
-              {phase === "entering" && <div className="crt__flash" aria-hidden="true" />}
+              {phase === "entering" && !reduce && <GameScene duration={3050} />}
             </div>
           </div>
 

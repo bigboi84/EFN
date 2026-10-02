@@ -138,7 +138,7 @@ export default function App() {
             <motion.div
               key={`site-${run}`}
               className="site"
-              initial={{ opacity: 0, scale: 1.12, filter: "brightness(2.4) blur(8px)" }}
+              initial={{ opacity: 0, scale: 1.12, filter: "brightness(0.5) blur(6px)" }}
               animate={{ opacity: 1, scale: 1, filter: "brightness(1) blur(0px)" }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             >
