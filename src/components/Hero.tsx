@@ -163,7 +163,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease, delay: 0.75 }}
           >
-            <a href="#zones" className="btn btn--gold">
+            <a href="#levels" className="btn btn--gold">
               Enter the Arena <ChevronRight size={18} />
             </a>
             <a href="#partners" className="btn btn--ghost">

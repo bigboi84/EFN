@@ -6,13 +6,26 @@ import { Hud } from "./components/Hud";
 import { Hero, Ticker } from "./components/Hero";
 import { What, Zones } from "./components/Zones";
 import { Hub } from "./components/Hub";
-import { Bowl, Cafe, Floor, GameShow } from "./components/Spaces";
+import { Bowl } from "./components/Spaces";
 import { Schedule } from "./components/Schedule";
-import { Modes } from "./components/Modes";
-import { Membership, Standards } from "./components/Membership";
+import { Standards } from "./components/Membership";
 import { Partners, NextLevel, Finale, Footer } from "./components/Partners";
+import { LevelSelect } from "./components/PageKit";
 import { AchievementCtx } from "./components/ui";
 import { sfx } from "./lib/sound";
+import { useRoute } from "./lib/router";
+import { PAGES } from "./data";
+import { TournamentsPage, FoodPage, GamesPage, GameShowPage, MembershipPage, AboutPage, NextGenPage } from "./pages";
+
+const PAGE_VIEWS = {
+  tournaments: TournamentsPage,
+  food: FoodPage,
+  games: GamesPage,
+  gameshow: GameShowPage,
+  membership: MembershipPage,
+  about: AboutPage,
+  nextgen: NextGenPage,
+};
 
 type Toast = { id: number; label: string };
 
@@ -24,6 +37,47 @@ export default function App() {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [party, setParty] = useState(false);
   const seen = useRef(new Set<string>());
+  const route = useRoute();
+  const [wipe, setWipe] = useState<string | null>(null);
+  const first = useRef(true);
+
+  // Page changes: play the level-loading wipe and start at the top; home anchors scroll to their section.
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    if (route.page !== "home" || !route.anchor) {
+      const label = route.page === "home" ? "Arena map" : PAGES.find((p) => p.id === route.page)!.label;
+      setWipe(label);
+      sfx.select();
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      const t = window.setTimeout(() => setWipe(null), 650);
+      return () => window.clearTimeout(t);
+    }
+    const id = route.anchor;
+    const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 60);
+    return () => window.clearTimeout(t);
+  }, [route.page, route.anchor]);
+
+  // In-page anchors (#book-tournament, #menu...) scroll without changing the route.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest?.("a[href^='#']") as HTMLAnchorElement | null;
+      if (!a) return;
+      const id = a.getAttribute("href")!.slice(1);
+      if (!id || PAGES.some((p) => p.id === id)) return;
+      const el = document.getElementById(id);
+      if (el && route.page !== "home") {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [route.page]);
+
+  const PageView = route.page === "home" ? null : PAGE_VIEWS[route.page];
 
   useEffect(() => {
     document.body.style.overflow = started ? "" : "hidden";
@@ -69,7 +123,7 @@ export default function App() {
 
         {started && (
           <>
-            <a href="#zones" className="skip-link">
+            <a href="#main" className="skip-link">
               Skip to content
             </a>
             <motion.div
@@ -79,7 +133,7 @@ export default function App() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
               style={{ position: "relative", zIndex: 50 }}
             >
-              <Hud />
+              <Hud page={route.page} />
             </motion.div>
             <motion.div
               key={`site-${run}`}
@@ -88,28 +142,48 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, filter: "brightness(1) blur(0px)" }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             >
-              <main>
-                <Hero />
-                <Ticker />
-                <What />
-                <Bowl />
-                <Cafe />
-                <Floor />
-                <GameShow />
-                <Zones />
-                <Hub />
-                <Schedule />
-                <Modes />
-                <Membership />
-                <Standards />
-                <Partners />
-                <NextLevel />
-                <Finale onReplay={replay} />
+              <main key={route.page} id="main">
+                {PageView ? (
+                  <PageView />
+                ) : (
+                  <>
+                    <Hero />
+                    <Ticker />
+                    <What />
+                    <Bowl />
+                    <LevelSelect />
+                    <Zones />
+                    <Hub />
+                    <Schedule />
+                    <Standards />
+                    <Partners />
+                    <NextLevel />
+                    <Finale onReplay={replay} />
+                  </>
+                )}
               </main>
               <Footer />
             </motion.div>
           </>
         )}
+
+        <AnimatePresence>
+          {wipe && (
+            <motion.div
+              key={wipe}
+              className="wipe"
+              initial={{ clipPath: "inset(0 100% 0 0)" }}
+              animate={{ clipPath: "inset(0 0% 0 0)" }}
+              exit={{ clipPath: "inset(0 0 0 100%)" }}
+              transition={{ duration: 0.32, ease: [0.7, 0, 0.3, 1] }}
+              aria-hidden="true"
+            >
+              <span className="px wipe__k">Loading level</span>
+              <span className="wipe__t">{wipe}</span>
+              <span className="wipe__bar" />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="toasts" aria-live="polite">
           <AnimatePresence>

@@ -1,7 +1,7 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, type MotionValue } from "motion/react";
-import { Handshake } from "lucide-react";
-import { ZONES } from "../data";
+import { Handshake, ArrowRight } from "lucide-react";
+import { ZONES, PAGES } from "../data";
 import { Section, SectionHead, Reveal, ease, Photo } from "./ui";
 import { sfx } from "../lib/sound";
 
@@ -75,7 +75,7 @@ export function Zones() {
     <Section id="zones" className="zones" achievement="Zone explorer: six zones discovered">
       <div className="wrap">
         <SectionHead
-          level="06"
+          level="04"
           kicker="The Arena & Lounge"
           title={
             <>
@@ -178,6 +178,9 @@ export function Zones() {
                     <span className="px">Partner fit</span>
                     <strong>{zone.partnerFit}</strong>
                   </div>
+                  <a href={`#${zone.page}`} className="btn btn--ghost btn--sm zd__go">
+                    Visit {PAGES.find((p) => p.id === zone.page)?.label} <ArrowRight size={16} />
+                  </a>
                 </motion.div>
               </AnimatePresence>
             </div>

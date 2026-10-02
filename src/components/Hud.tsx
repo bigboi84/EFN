@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring, AnimatePresence } from "motion/react";
 import { Volume2, VolumeX, Menu, X } from "lucide-react";
-import { NAV } from "../data";
+import { PAGES, type PageId } from "../data";
 import { isMuted, setMuted, sfx, unlockAudio } from "../lib/sound";
 
-export function Hud() {
+export function Hud({ page }: { page: PageId | "home" }) {
   const { scrollYProgress } = useScroll();
   const xp = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
-  const [active, setActive] = useState("");
   const [level, setLevel] = useState(1);
   const [muted, setM] = useState(isMuted());
   const [open, setOpen] = useState(false);
@@ -19,7 +18,6 @@ export function Hud() {
       (entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
-          setActive(e.target.id);
           setLevel(els.indexOf(e.target as HTMLElement) + 1);
         });
       },
@@ -33,7 +31,7 @@ export function Hud() {
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [page]);
 
 
   const toggleSound = () => {
@@ -49,7 +47,7 @@ export function Hud() {
   return (
     <header className={`hud ${scrolled ? "is-scrolled" : ""}`}>
       <div className="hud__inner">
-        <a href="#top" className="hud__brand" aria-label="EFN Arena & Lounge, back to top">
+        <a href="#" className="hud__brand" aria-label="EFN Arena & Lounge home">
           <span className="hud__mark">EFN</span>
           <span className="hud__name">
             Arena <em>&amp;</em> Lounge
@@ -57,10 +55,10 @@ export function Hud() {
         </a>
 
         <nav className="hud__nav" aria-label="Sections">
-          {NAV.map((n) => (
-            <a key={n.id} href={`#${n.id}`} className={active === n.id ? "is-active" : ""}>
-              {active === n.id && <motion.span layoutId="nav-cursor" className="hud__cursor" />}
-              <span>{n.label}</span>
+          {PAGES.map((n) => (
+            <a key={n.id} href={`#${n.id}`} className={page === n.id ? "is-active" : ""} aria-current={page === n.id ? "page" : undefined}>
+              {page === n.id && <motion.span layoutId="nav-cursor" className="hud__cursor" />}
+              <span>{n.short}</span>
             </a>
           ))}
         </nav>
@@ -69,7 +67,7 @@ export function Hud() {
           <button className="icon-btn" onClick={toggleSound} aria-label={muted ? "Turn sound on" : "Turn sound off"} aria-pressed={!muted}>
             {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
           </button>
-          <a href="#partners" className="btn btn--red btn--sm hud__cta">
+          <a href="#about" className="btn btn--red btn--sm hud__cta">
             Partner with EFN
           </a>
           <button className="icon-btn hud__menu" onClick={() => setOpen((o) => !o)} aria-label="Open menu" aria-expanded={open}>
@@ -96,13 +94,17 @@ export function Hud() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2 }}
           >
-            {NAV.map((n, i) => (
-              <a key={n.id} href={`#${n.id}`} onClick={() => setOpen(false)}>
-                <span className="px">{String(i + 2).padStart(2, "0")}</span>
+            <a href="#" onClick={() => setOpen(false)}>
+              <span className="px">00</span>
+              Arena map
+            </a>
+            {PAGES.map((n, i) => (
+              <a key={n.id} href={`#${n.id}`} onClick={() => setOpen(false)} aria-current={page === n.id ? "page" : undefined}>
+                <span className="px">{String(i + 1).padStart(2, "0")}</span>
                 {n.label}
               </a>
             ))}
-            <a href="#partners" className="btn btn--red" onClick={() => setOpen(false)}>
+            <a href="#about" className="btn btn--red" onClick={() => setOpen(false)}>
               Partner with EFN
             </a>
           </motion.nav>

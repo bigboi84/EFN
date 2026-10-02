@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { CalendarDays, Trophy, Radio, ShieldCheck, MapPinned, Zap, Lock, Mail, Phone, RotateCcw, ArrowUp } from "lucide-react";
-import { POWER_UPS, TO_CONFIRM, CONTACT, TARGETS } from "../data";
+import { POWER_UPS, TO_CONFIRM, CONTACT, TARGETS, PAGES } from "../data";
 import { Section, SectionHead, Reveal } from "./ui";
 import { Token } from "./Token";
 
@@ -138,8 +138,8 @@ export function Finale({ onReplay }: { onReplay: () => void }) {
           <button className="btn btn--red" onClick={onReplay}>
             <RotateCcw size={18} /> Replay the intro
           </button>
-          <a href="#top" className="btn btn--ghost">
-            <ArrowUp size={18} /> Back to start
+          <a href="#levels" className="btn btn--ghost">
+            <ArrowUp size={18} /> Explore the stages
           </a>
         </div>
       </div>
@@ -158,6 +158,13 @@ export function Footer() {
             <p>Arena &amp; Lounge · Phase 1 · Trinidad &amp; Tobago</p>
           </div>
         </div>
+        <nav className="footer__nav" aria-label="Pages">
+          {PAGES.map((p) => (
+            <a key={p.id} href={`#${p.id}`}>
+              {p.label}
+            </a>
+          ))}
+        </nav>
         <p className="px footer__secret">↑ ↑ ↓ ↓ ← → ← → B A</p>
       </div>
     </footer>

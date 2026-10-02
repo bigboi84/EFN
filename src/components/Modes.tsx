@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Building2, Bus, Wifi, Scale } from "lucide-react";
-import { MODES } from "../data";
-import { Section, SectionHead, Reveal } from "./ui";
+import { MODES, MODE_IMAGES } from "../data";
+import { Section, SectionHead, Reveal, Photo } from "./ui";
 import { sfx } from "../lib/sound";
 
 const ICONS = [Building2, Bus, Wifi];
@@ -32,6 +32,9 @@ export function Modes() {
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   onHoverStart={() => sfx.blip()}
                 >
+                  <div className="mode__photo">
+                    <Photo name={MODE_IMAGES[i]} alt="" sizes="(max-width: 900px) 100vw, 33vw" />
+                  </div>
                   <div className="mode__top">
                     <span className="mode__icon">
                       <Icon size={26} strokeWidth={1.6} />

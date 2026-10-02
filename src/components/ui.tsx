@@ -43,7 +43,7 @@ export function SectionHead({
   return (
     <Reveal className={`shead shead--${align}`}>
       <p className="shead__kicker px">
-        <span className="shead__lvl">LVL {level}</span>
+        <span className="shead__lvl" data-level={level}>LVL </span>
         <span>{kicker}</span>
       </p>
       <h2 className="shead__title">{title}</h2>
