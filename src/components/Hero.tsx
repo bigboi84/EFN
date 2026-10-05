@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { animate, motion, AnimatePresence, useInView, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { ChevronRight, Pause, Play } from "lucide-react";
 import { TARGETS } from "../data";
-import { ease, Photo, mediaUrl } from "./ui";
+import { ease, Photo, mediaUrl, hasMedia } from "./ui";
 
 const WORDS = ["Esports", "Food", "Game Shows", "Finals", "Trivia", "Scrims", "Family Fun"];
 
@@ -79,7 +79,7 @@ export function Hero() {
               playsInline
               preload="auto"
             >
-              <source src={mediaUrl("hero-loop.webm")} type="video/webm" />
+              {hasMedia("hero-loop.webm") && <source src={mediaUrl("hero-loop.webm")} type="video/webm" />}
               <source src={mediaUrl("hero-loop.mp4")} type="video/mp4" />
             </video>
           )}

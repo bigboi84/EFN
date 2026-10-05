@@ -24,7 +24,13 @@ npm run build         # production build → dist/
 npm run build:single  # one self-contained HTML file → dist-single/index.html
 ```
 
-`dist-single/index.html` is handy for emailing or presenting offline (fonts still load from Google Fonts when online).
+`dist-single/index.html` is handy for emailing (photos and fonts load from the web).
+
+```bash
+npm run build:offline # fully self-contained file (fonts, photos, videos) → dist-offline/EFN-Arena.html
+```
+
+The offline file works with no internet: double-click to open it in Chrome, Edge or Safari.
 
 ## Edit content
 

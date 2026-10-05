@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Volume2, VolumeX, Monitor, Eye, Layers } from "lucide-react";
 import { FLOOR_SPECS, SHOW_FEATURES } from "../data";
-import { Section, SectionHead, Reveal, Photo, mediaUrl } from "./ui";
+import { Section, SectionHead, Reveal, Photo, mediaUrl, hasMedia } from "./ui";
 
 /* Top-down plan of the oval: sunken gaming pit in the middle, raised dining ring behind glass. */
 function BowlPlan() {
@@ -242,7 +242,6 @@ export function GameShow() {
               <video
                 ref={video}
                 key={clip}
-                src={mediaUrl(CLIPS[clip].file)}
                 poster={mediaUrl(CLIPS[clip].poster)}
                 autoPlay
                 muted={muted}
@@ -250,7 +249,12 @@ export function GameShow() {
                 onEnded={() => setClip((c) => (c + 1) % CLIPS.length)}
                 preload="metadata"
                 aria-label="Teams playing in the game-show room: spinning the prize wheel, hitting buzzers and celebrating under confetti"
-              />
+              >
+                {hasMedia(CLIPS[clip].file.replace(".mp4", ".webm")) && (
+                  <source src={mediaUrl(CLIPS[clip].file.replace(".mp4", ".webm"))} type="video/webm" />
+                )}
+                <source src={mediaUrl(CLIPS[clip].file)} type="video/mp4" />
+              </video>
               <button className="gameshow__sound" onClick={toggle} aria-pressed={!muted}>
                 {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
                 {muted ? "Tap for sound" : "Sound on"}

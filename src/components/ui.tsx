@@ -82,7 +82,30 @@ export function Section({
   );
 }
 
-export const mediaUrl = (file: string) => `${import.meta.env.BASE_URL}media/${file}`;
+// Offline build: media is embedded as base64 in window.__EFN_MEDIA and served as blob URLs.
+type Embedded = Record<string, [string, string]>;
+const embedded = (globalThis as unknown as { __EFN_MEDIA?: Embedded }).__EFN_MEDIA;
+const blobCache = new Map<string, string>();
+
+export const isEmbedded = Boolean(embedded);
+
+export function hasMedia(file: string) {
+  return !embedded || file in embedded;
+}
+
+export function mediaUrl(file: string) {
+  if (!embedded) return `${import.meta.env.BASE_URL}media/${file}`;
+  const hit = blobCache.get(file);
+  if (hit) return hit;
+  const entry = embedded[file];
+  if (!entry) return "";
+  const bin = atob(entry[1]);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  const url = URL.createObjectURL(new Blob([bytes], { type: entry[0] }));
+  blobCache.set(file, url);
+  return url;
+}
 
 /** Responsive WebP photo: `name` maps to media/name.webp and media/name-sm.webp. */
 export function Photo({
@@ -102,8 +125,8 @@ export function Photo({
     <img
       className={className}
       src={mediaUrl(`${name}.webp`)}
-      srcSet={`${mediaUrl(`${name}-sm.webp`)} 960w, ${mediaUrl(`${name}.webp`)} 1920w`}
-      sizes={sizes}
+      srcSet={isEmbedded ? undefined : `${mediaUrl(`${name}-sm.webp`)} 960w, ${mediaUrl(`${name}.webp`)} 1920w`}
+      sizes={isEmbedded ? undefined : sizes}
       alt={alt}
       width={1920}
       height={1086}

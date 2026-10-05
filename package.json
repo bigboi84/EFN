@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "build:single": "tsc -b && SINGLE=1 vite build"
+    "build:single": "tsc -b && SINGLE=1 vite build",
+    "build:offline": "python3 scripts/build_offline.py"
   },
   "dependencies": {
     "lucide-react": "^1.49.0",
