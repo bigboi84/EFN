@@ -8,6 +8,7 @@ import { What, Zones } from "./components/Zones";
 import { Bowl } from "./components/Spaces";
 import { Finale, Footer } from "./components/Partners";
 import { LevelSelect } from "./components/PageKit";
+import { HouseRules } from "./components/HouseRules";
 import { AchievementCtx } from "./components/ui";
 import { sfx } from "./lib/sound";
 import { useRoute } from "./lib/router";
@@ -150,6 +151,7 @@ export default function App() {
                     <Bowl />
                     <LevelSelect />
                     <Zones />
+                    <HouseRules />
                     <Finale onReplay={replay} />
                   </>
                 )}

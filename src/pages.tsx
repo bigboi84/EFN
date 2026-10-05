@@ -15,6 +15,7 @@ import {
 } from "./data";
 import { Section, SectionHead, Reveal, Photo } from "./components/ui";
 import { PageHero, NextStage } from "./components/PageKit";
+import { HouseRules } from "./components/HouseRules";
 import { BookingForm } from "./components/Booking";
 import { Modes } from "./components/Modes";
 import { Schedule } from "./components/Schedule";
@@ -62,6 +63,7 @@ export function TournamentsPage() {
         </div>
       </Section>
       <Schedule />
+      <HouseRules />
       <Section id="book-tournament" className="book" achievement="Booked in: see you on the bracket">
         <div className="wrap book__grid">
           <SectionHead level="04" kicker="Bookings" title={<>Book your <span className="hl-red">match</span></>} lede="Enter a tournament, host your own in the gaming pit, bring EFN to your venue or run an online bracket. Tell us what you need and we'll confirm the details." />
@@ -357,6 +359,7 @@ export function MembershipPage() {
         lede="Anyone can visit the Arena. Members get guaranteed tournament places, half-price entry, member rates in the lounge and the private community."
       />
       <Membership />
+      <HouseRules />
       <Standards />
       <NextStage page="membership" />
     </>
