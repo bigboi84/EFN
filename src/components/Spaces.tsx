@@ -253,7 +253,7 @@ export function GameShow() {
                 {hasMedia(CLIPS[clip].file.replace(".mp4", ".webm")) && (
                   <source src={mediaUrl(CLIPS[clip].file.replace(".mp4", ".webm"))} type="video/webm" />
                 )}
-                <source src={mediaUrl(CLIPS[clip].file)} type="video/mp4" />
+                {hasMedia(CLIPS[clip].file) && <source src={mediaUrl(CLIPS[clip].file)} type="video/mp4" />}
               </video>
               <button className="gameshow__sound" onClick={toggle} aria-pressed={!muted}>
                 {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}

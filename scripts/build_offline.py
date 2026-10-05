@@ -8,6 +8,7 @@ import json
 import pathlib
 import re
 import subprocess
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MEDIA = ROOT / "public" / "media"
@@ -37,9 +38,13 @@ def main() -> None:
     html = re.sub(r'\s*<link rel="preconnect"[^>]*>', "", html)
     html = re.sub(r'\s*<link href="https://fonts\.googleapis\.com[^>]*>', "", html)
 
-    # Media: full-size photos, posters, and each video as WebM + MP4 so every browser can play it.
+    # Media: full-size photos, posters and WebM videos (Chrome, Edge, Firefox). Pass --mp4 to also
+    # embed MP4 copies for Safari; that pushes the file past 30 MB.
+    with_mp4 = "--mp4" in sys.argv
     media = {}
     for f in sorted(MEDIA.iterdir()):
+        if f.suffix == ".mp4" and not with_mp4:
+            continue
         if f.name.endswith("-sm.webp") and f.name not in KEEP_SMALL:
             continue
         media[f.name] = [TYPES[f.suffix], b64(f)]

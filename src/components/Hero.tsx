@@ -80,7 +80,7 @@ export function Hero() {
               preload="auto"
             >
               {hasMedia("hero-loop.webm") && <source src={mediaUrl("hero-loop.webm")} type="video/webm" />}
-              <source src={mediaUrl("hero-loop.mp4")} type="video/mp4" />
+              {hasMedia("hero-loop.mp4") && <source src={mediaUrl("hero-loop.mp4")} type="video/mp4" />}
             </video>
           )}
         </motion.div>
