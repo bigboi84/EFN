@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { Volume2, VolumeX, Pizza, Monitor, Eye, Layers } from "lucide-react";
-import { MENU, FLOOR_SPECS, SHOW_FEATURES } from "../data";
+import { Volume2, VolumeX, Monitor, Eye, Layers } from "lucide-react";
+import { FLOOR_SPECS, SHOW_FEATURES } from "../data";
 import { Section, SectionHead, Reveal, Photo, mediaUrl } from "./ui";
 
 /* Top-down plan of the oval: sunken gaming pit in the middle, raised dining ring behind glass. */
@@ -149,17 +149,6 @@ export function Cafe() {
               <Photo name="food-sofa" alt="Friends on sofas with controllers and food, facing a big screen" sizes="(max-width: 900px) 100vw, 40vw" />
               <figcaption>Sofa lounge</figcaption>
             </figure>
-          </Reveal>
-          <Reveal delay={0.16} className="cafe__menu panel">
-            <p className="px cafe__menu-k">
-              <Pizza size={16} /> On the menu
-            </p>
-            <ul>
-              {MENU.map((m) => (
-                <li key={m}>{m}</li>
-              ))}
-            </ul>
-            <p className="cafe__menu-note">Served to stations and tables. Full menu confirmed before launch.</p>
           </Reveal>
         </div>
       </div>

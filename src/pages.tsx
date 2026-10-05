@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Trophy, Utensils, Users, Clock, Sparkles, Scale, Flame } from "lucide-react";
+import { Trophy, Utensils, Users, Clock, Sparkles, Flame } from "lucide-react";
 import {
   MENU_SECTIONS,
   COMBOS,
@@ -59,13 +59,6 @@ export function TournamentsPage() {
               </Reveal>
             ))}
           </div>
-          <Reveal className="modes__rules">
-            <Scale size={22} />
-            <p>
-              <strong>Fair play, every time.</strong> Supervised floors, a published code of conduct, age-appropriate game policies and
-              parental consent for under-18 members. Brands, schools and other organisers can book the Arena for their own events.
-            </p>
-          </Reveal>
         </div>
       </Section>
       <Schedule />
@@ -104,7 +97,7 @@ export function FoodPage() {
       <Cafe />
       <Section id="menu" className="menu" achievement="Menu unlocked: order up">
         <div className="wrap">
-          <SectionHead level="02" kicker="The menu" title={<>Pick your <span className="hl-red">loadout</span></>} lede="Prices in TT$. Sample menu for Phase 1; final dishes and prices are confirmed before launch." />
+          <SectionHead level="02" kicker="The menu" title={<>Pick your <span className="hl-red">loadout</span></>} lede="Prices in TT$. Sample menu; final dishes and prices are confirmed before launch." />
           <div className="menu__tabs" role="tablist" aria-label="Menu sections">
             {MENU_SECTIONS.map((s) => (
               <button key={s.id} role="tab" aria-selected={s.id === tab} className={s.id === tab ? "is-on" : ""} onClick={() => setTab(s.id)}>
@@ -315,7 +308,7 @@ export function GameShowPage() {
       </Section>
       <Section id="packages" className="packages">
         <div className="wrap">
-          <SectionHead level="03" kicker="Packages" title={<>Pick your <span className="hl-gold">party</span></>} lede="Pricing on request while Phase 1 rates are confirmed." />
+          <SectionHead level="03" kicker="Packages" title={<>Pick your <span className="hl-gold">party</span></>} lede="Pricing on request." />
           <div className="packages__grid">
             {SHOW_PACKAGES.map((p, i) => (
               <Reveal key={p.name} delay={i * 0.07}>
@@ -383,7 +376,7 @@ export function AboutPage() {
             Esports & <span className="hl-red">Fans</span> Network
           </>
         }
-        lede="EFN's Phase 1 opens the Arena & Lounge as the home of esports and fans in Trinidad & Tobago, with a target of 1,000 players and 5,000 fans."
+        lede="The EFN Arena & Lounge is the home of esports and fans in Trinidad & Tobago, built to reach 1,000 players and 5,000 fans."
       />
       <What />
       <Hub />
@@ -431,7 +424,7 @@ export function NextGenPage() {
       </Section>
       <Section id="programmes" className="programmes" achievement="XP gained: NextGen programmes">
         <div className="wrap">
-          <SectionHead level="02" kicker="Programmes" title={<>Four ways to <span className="hl-cyan">take part</span></>} lede="Programme concepts for Phase 1, shaped with schools and partners before launch." />
+          <SectionHead level="02" kicker="Programmes" title={<>Four ways to <span className="hl-cyan">take part</span></>} lede="Programme concepts, shaped with schools and partners before launch." />
           <div className="programmes__list">
             {XP_PROGRAMMES.map((p, i) => (
               <Reveal key={p.title}>

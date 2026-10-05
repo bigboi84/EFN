@@ -281,7 +281,6 @@ export const HERO_SLIDES = [
   { image: "food-overview", tag: "The whole Arena", caption: "Dining, gaming, a stage and a game show under one roof" },
 ];
 
-export const MENU = ["Wood-fired pizza", "Smash burgers", "Wings & dips", "Loaded fries", "Mocktails & sodas"];
 
 export const FLOOR_SPECS = [
   { k: "32", v: "Console stations" },

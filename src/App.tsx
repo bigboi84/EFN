@@ -5,11 +5,8 @@ import { Intro } from "./components/Intro";
 import { Hud } from "./components/Hud";
 import { Hero, Ticker } from "./components/Hero";
 import { What, Zones } from "./components/Zones";
-import { Hub } from "./components/Hub";
 import { Bowl } from "./components/Spaces";
-import { Schedule } from "./components/Schedule";
-import { Standards } from "./components/Membership";
-import { Partners, NextLevel, Finale, Footer } from "./components/Partners";
+import { Finale, Footer } from "./components/Partners";
 import { LevelSelect } from "./components/PageKit";
 import { AchievementCtx } from "./components/ui";
 import { sfx } from "./lib/sound";
@@ -153,11 +150,6 @@ export default function App() {
                     <Bowl />
                     <LevelSelect />
                     <Zones />
-                    <Hub />
-                    <Schedule />
-                    <Standards />
-                    <Partners />
-                    <NextLevel />
                     <Finale onReplay={replay} />
                   </>
                 )}

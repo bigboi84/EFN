@@ -24,7 +24,7 @@ export function Partners() {
               Grab a <span className="hl-gold">power-up</span>
             </>
           }
-          lede={`Phase 1 is built to reach ${TARGETS.players.toLocaleString("en-US")} players and ${TARGETS.fans.toLocaleString("en-US")} fans. Partners get a brand presence in a venue people use every day, plus the big nights on stage and on stream.`}
+          lede={`EFN is built to reach ${TARGETS.players.toLocaleString("en-US")} players and ${TARGETS.fans.toLocaleString("en-US")} fans. Partners get a brand presence in a venue people use every day, plus the big nights on stage and on stream.`}
         />
 
         <Reveal className="reasons">
@@ -117,7 +117,7 @@ export function Finale({ onReplay }: { onReplay: () => void }) {
           <span className="hl-gold">Our arena.</span>
         </h2>
         <p className="finale__lede">
-          Join EFN as a Phase 1 partner and be part of the home of esports, food and family entertainment in Trinidad
+          Partner with EFN and be part of the home of esports, food and family entertainment in Trinidad
           &amp; Tobago.
         </p>
         {hasContact && (
@@ -155,7 +155,7 @@ export function Footer() {
           <span className="hud__mark">EFN</span>
           <div>
             <strong>Esports &amp; Fans Network</strong>
-            <p>Arena &amp; Lounge · Phase 1 · Trinidad &amp; Tobago</p>
+            <p>Arena &amp; Lounge · Trinidad &amp; Tobago</p>
           </div>
         </div>
         <nav className="footer__nav" aria-label="Pages">

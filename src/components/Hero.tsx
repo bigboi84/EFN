@@ -103,7 +103,7 @@ export function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease, delay: 0.2 }}
           >
-            <span className="dot" /> Phase 1 · Trinidad &amp; Tobago
+            <span className="dot" /> Trinidad &amp; Tobago
           </motion.p>
 
           <h1 className="hero__title">
@@ -174,13 +174,13 @@ export function Hero() {
 
         <motion.aside
           className="panel hero__panel"
-          aria-label="Phase 1 objectives"
+          aria-label="Arena goals"
           initial={{ opacity: 0, x: 40, rotateY: -12 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 0.9, ease, delay: 0.5 }}
         >
           <div className="panel__bar">
-            <span className="px">Phase 1 objectives</span>
+            <span className="px">Arena goals</span>
             <span className="panel__lights" aria-hidden="true">
               <i />
               <i />

@@ -2613,8 +2613,7 @@ p {
   grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
   grid-template-areas:
     "a b"
-    "a c"
-    "menu menu";
+    "a c";
   gap: 20px;
 }
 .cafe__a {
@@ -4031,7 +4030,7 @@ main {
   }
   .cafe__bento {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "a" "b" "c" "menu";
+    grid-template-areas: "a" "b" "c";
   }
   .cafe__a .frame img,
   .bowl__hero img {
@@ -4158,5 +4157,178 @@ main {
   }
   .zd {
     gap: 18px;
+  }
+}
+
+/* ---------- Mobile polish ---------- */
+.footer__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.phero__back {
+  min-height: 44px;
+}
+@media (max-width: 720px) {
+  .section {
+    padding-block: 64px;
+  }
+  .shead {
+    margin-bottom: 32px;
+    gap: 14px;
+  }
+  .shead__title {
+    font-size: clamp(34px, 10vw, 48px);
+  }
+  /* hero goals: two counters side by side */
+  .hero {
+    min-height: 0;
+    padding-bottom: 96px;
+  }
+  .hero__panel {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero__panel .panel__bar,
+  .hero__mini {
+    grid-column: 1 / -1;
+  }
+  .obj {
+    padding: 14px;
+  }
+  .obj + .obj {
+    border-left: 1px solid var(--line);
+  }
+  .obj__num {
+    font-size: 34px;
+  }
+  .obj__head .obj__target {
+    display: none;
+  }
+  .hero__mini {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .hero__mini div {
+    padding: 10px 8px;
+    border: 0 !important;
+  }
+  .hero__mini dd {
+    font-size: 20px;
+  }
+  .hero__ctas .btn {
+    flex: 1 1 100%;
+  }
+  /* what: smaller kinetic words in two columns */
+  .what__verbs {
+    font-size: 40px;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+  }
+  /* stage select: compact two-up grid */
+  .levels__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 170px;
+    gap: 10px;
+  }
+  .levels__cell--0 {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .levels__cell--6 {
+    grid-column: auto;
+  }
+  .lcard__body {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .lcard__title {
+    font-size: 18px;
+  }
+  .levels__cell--0 .lcard__title {
+    font-size: 26px;
+  }
+  .lcard__blurb,
+  .lcard__go {
+    display: none;
+  }
+  .levels__cell--0 .lcard__blurb {
+    display: block;
+    font-size: 14px;
+  }
+  /* page heroes */
+  .phero {
+    min-height: 0;
+    padding-top: calc(var(--hud-h) + 24px);
+  }
+  .phero__title {
+    font-size: clamp(42px, 12vw, 60px);
+  }
+  .phero__lede {
+    font-size: 16px;
+  }
+  .nextstage__inner {
+    padding-block: 48px;
+  }
+  .nextstage__title {
+    font-size: 34px;
+  }
+  .finale__title {
+    font-size: 44px;
+  }
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer__nav {
+    gap: 0 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .what__verbs {
+    font-size: 34px;
+  }
+  .menu__tabs,
+  .library__filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  .menu__tabs::-webkit-scrollbar,
+  .library__filters::-webkit-scrollbar {
+    display: none;
+  }
+  .menu__tabs button,
+  .library__filters button {
+    flex-shrink: 0;
+  }
+  .hub__stage {
+    width: 82%;
+  }
+  .hub__node {
+    width: 84px;
+    padding: 8px 4px;
+    font-size: 10px;
+    gap: 4px;
+  }
+  .hub__core strong {
+    font-size: 15px;
+  }
+  .booking__step {
+    display: none;
+  }
+  .modes__rules {
+    padding: 18px;
+  }
+}
+@media (max-width: 720px) {
+  .cab {
+    --cab-h: min(60svh, 540px);
+  }
+  .intro__hint {
+    padding-top: 70px;
   }
 }
