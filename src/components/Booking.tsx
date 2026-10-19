@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Ticket, Copy, Check, Loader2 } from "lucide-react";
-import { submitBooking, type BookingKind } from "../lib/bookings";
+import { submitBooking } from "../lib/bookings";
+
+type BookingKind = "tournament" | "gameshow" | "school";
 import { CONTACT, TOURNAMENT_TITLES, SHOW_PACKAGES } from "../data";
 import { sfx, unlockAudio } from "../lib/sound";
 import { Reveal } from "./ui";

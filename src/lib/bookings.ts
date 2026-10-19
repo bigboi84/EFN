@@ -1,7 +1,7 @@
 // Saves booking requests to the published page's shared store when it is available
 // (claude.ai artifact `db` capability). Elsewhere the form falls back to a copyable summary.
 
-export type BookingKind = "tournament" | "gameshow" | "school";
+export type BookingKind = "tournament" | "gameshow" | "school" | "birthday" | "group" | "league" | "table" | "card" | "offers";
 export type BookingResult = { status: "saved"; ref: string } | { status: "offline"; ref: string };
 
 type Claude = { use: (name: string) => Promise<unknown> };

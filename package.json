@@ -8,7 +8,11 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "build:single": "tsc -b && SINGLE=1 vite build",
-    "build:offline": "python3 scripts/build_offline.py"
+    "build:offline": "python3 scripts/build_offline.py",
+    "dev:arena": "vite --config vite.arena.config.ts",
+    "build:arena": "tsc -b && vite build --config vite.arena.config.ts",
+    "build:arena:single": "tsc -b && SINGLE=1 vite build --config vite.arena.config.ts",
+    "build:arena:offline": "python3 scripts/build_offline.py --site arena"
   },
   "dependencies": {
     "lucide-react": "^1.49.0",

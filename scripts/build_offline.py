@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Build one fully self-contained HTML file (fonts, photos and videos embedded) for offline presenting.
 
-Usage:  npm run build:offline   ->  dist-offline/EFN-Arena.html
+Usage:  npm run build:offline          ->  dist-offline/EFN-Arena.html      (EFN network site)
+        npm run build:arena:offline   ->  dist-offline/EFN-ARENA-Site.html (EFN ARENA site)
 """
 import base64
 import json
@@ -13,7 +14,10 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MEDIA = ROOT / "public" / "media"
 FONTS = ROOT / "offline-fonts"
-OUT = ROOT / "dist-offline" / "EFN-Arena.html"
+SITE = "arena" if "--site" in sys.argv and sys.argv[sys.argv.index("--site") + 1] == "arena" else "efn"
+OUT = ROOT / "dist-offline" / ("EFN-ARENA-Site.html" if SITE == "arena" else "EFN-Arena.html")
+SRC = ROOT / ("dist-arena-single" if SITE == "arena" else "dist-single") / "index.html"
+BUILD = "build:arena:single" if SITE == "arena" else "build:single"
 
 TYPES = {".webp": "image/webp", ".mp4": "video/mp4", ".webm": "video/webm"}
 # Small posters still referenced by the game-show video player.
@@ -25,8 +29,8 @@ def b64(path: pathlib.Path) -> str:
 
 
 def main() -> None:
-    subprocess.run(["npm", "run", "build:single"], cwd=ROOT, check=True)
-    html = (ROOT / "dist-single" / "index.html").read_text()
+    subprocess.run(["npm", "run", BUILD], cwd=ROOT, check=True)
+    html = SRC.read_text()
 
     # Fonts: replace Google Fonts links with inline @font-face rules.
     css = (FONTS / "fonts.css").read_text()
