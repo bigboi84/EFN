@@ -1,30 +1,31 @@
-/* EFN ARENA: a bright, daytime arcade. White and mist surfaces, navy bands, red buttons that press like arcade buttons,
-   gold ticket stickers. Same family as the EFN site (Russo One, Chakra Petch, red and gold), lighter and more family-friendly. */
+/* EFN ARENA: deep navy with electric-blue highlights, chunky rounded display type. */
 :root {
-  --ink: #0b1030;
-  --ink-2: #2b3158;
-  --mute: #5a6283;
-  --paper: #ffffff;
-  --mist: #f1f3fb;
-  --line: #dde1f0;
-  --navy: #0b1030;
-  --navy-2: #151b4a;
-  --red: #e4163a;
-  --red-d: #a90e2b;
-  --red-ink: #c4102f;
+  --ink: #f2f6ff;
+  --ink-2: #c6d3f7;
+  --mute: #8fa4dc;
+  --paper: #060d36;
+  --mist: #0a1649;
+  --card: #0f1f63;
+  --line: #243d95;
+  --edge: #2f6bff;
+  --navy: #040927;
+  --navy-2: #0a1546;
+  --red: #1e8cff;
+  --red-d: #0b4fc7;
+  --red-ink: #66b6ff;
   --gold: #ffc23d;
   --gold-d: #c98d00;
-  --cyan: #12bfd0;
-  --cyan-ink: #08818e;
+  --cyan: #19e0f0;
+  --cyan-ink: #5ee7f4;
 
-  --f-display: "Russo One", "Arial Black", Impact, sans-serif;
-  --f-body: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --f-display: "Lilita One", "Arial Rounded MT Bold", "Arial Black", sans-serif;
+  --f-body: "Nunito", "Segoe UI", system-ui, sans-serif;
   --f-pixel: "Press Start 2P", ui-monospace, "Courier New", monospace;
 
   --radius: 20px;
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1240px;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 *,
@@ -241,22 +242,22 @@ h3 {
   color: #fff;
 }
 .btn--white {
-  --sh: rgba(0, 0, 0, 0.35);
+  --sh: rgba(0, 0, 0, 0.45);
   background: #fff;
-  color: var(--ink);
+  color: #0b1030;
 }
 .btn--ghost {
   --sh: var(--line);
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
-  border: 2px solid var(--ink);
-  box-shadow: 0 4px 0 var(--ink);
+  border: 2px solid var(--edge);
+  box-shadow: 0 4px 0 var(--navy);
 }
 .btn--ghost:hover {
-  box-shadow: 0 6px 0 var(--ink);
+  box-shadow: 0 6px 0 var(--navy);
 }
 .btn--ghost:active {
-  box-shadow: 0 1px 0 var(--ink);
+  box-shadow: 0 1px 0 var(--navy);
 }
 
 /* ---------- Header ---------- */
@@ -264,7 +265,7 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #fff;
+  background: var(--card);
   transition: box-shadow 0.25s;
 }
 .hdr.is-scrolled {
@@ -407,8 +408,8 @@ h3 {
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  border: 2px solid var(--ink);
-  background: #fff;
+  border: 2px solid var(--edge);
+  background: var(--card);
   cursor: pointer;
 }
 .sheet {
@@ -506,12 +507,12 @@ h3 {
   margin-top: -78px;
 }
 .plan {
-  background: #fff;
+  background: var(--card);
   border-radius: 26px;
   padding: 22px clamp(18px, 3vw, 30px) 26px;
   box-shadow:
     0 30px 70px -24px rgba(11, 16, 48, 0.5),
-    0 0 0 2px var(--ink);
+    0 0 0 2px var(--navy);
 }
 .plan__k {
   display: flex;
@@ -548,7 +549,7 @@ h3 {
   width: 100%;
   min-height: 52px;
   padding: 12px 14px;
-  background: #fff;
+  background: var(--card);
   border: 2px solid var(--line);
   border-radius: 14px;
   font-size: 16px;
@@ -562,7 +563,7 @@ h3 {
 .field select:focus,
 .field textarea:focus {
   outline: none;
-  border-color: var(--ink);
+  border-color: var(--edge);
   box-shadow: 0 0 0 4px rgba(18, 191, 208, 0.3);
 }
 
@@ -576,18 +577,18 @@ h3 {
   display: block;
   height: 100%;
   text-decoration: none;
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius);
   overflow: hidden;
-  border: 2px solid var(--ink);
-  box-shadow: 0 6px 0 var(--ink);
+  border: 2px solid var(--edge);
+  box-shadow: 0 6px 0 var(--navy);
   transition:
     transform 0.2s,
     box-shadow 0.2s;
 }
 .act:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 0 var(--ink);
+  box-shadow: 0 10px 0 var(--navy);
 }
 .act__img,
 .arow__img,
@@ -657,7 +658,7 @@ h3 {
   overflow: hidden;
   background: var(--gold);
   color: var(--ink);
-  border-block: 3px solid var(--ink);
+  border-block: 3px solid var(--edge);
 }
 .marquee__track {
   display: flex;
@@ -700,7 +701,7 @@ h3 {
 }
 .split__img {
   border-radius: 28px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   box-shadow: 10px 10px 0 var(--red);
   aspect-ratio: 4 / 3;
 }
@@ -789,7 +790,7 @@ h3 {
   display: block;
   height: 100%;
   text-decoration: none;
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
   border-radius: var(--radius);
   overflow: hidden;
@@ -810,7 +811,7 @@ h3 {
   margin-top: -26px;
   border-radius: 16px;
   background: var(--gold);
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   color: var(--ink);
   position: relative;
 }
@@ -912,8 +913,8 @@ h3 {
 .fmt {
   --c: var(--red);
   height: 100%;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
   box-shadow: 0 6px 0 var(--c);
   overflow: hidden;
@@ -976,7 +977,7 @@ h3 {
 .deal__img {
   aspect-ratio: 4 / 3;
   border-radius: var(--radius);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
 }
 .deal__tag {
   position: absolute;
@@ -984,7 +985,7 @@ h3 {
   top: 10px;
   padding: 5px 12px;
   background: var(--gold);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   border-radius: 999px;
   font-weight: 700;
   font-size: 13px;
@@ -1006,10 +1007,10 @@ h3 {
 }
 .bdeal {
   height: 100%;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
-  box-shadow: 0 6px 0 var(--ink);
+  box-shadow: 0 6px 0 var(--navy);
   overflow: hidden;
 }
 .bdeal__img {
@@ -1041,7 +1042,7 @@ h3 {
   gap: 8px;
   align-content: start;
   padding: 22px;
-  background: #fff;
+  background: var(--card);
   border: 2px solid var(--line);
   border-radius: var(--radius);
 }
@@ -1051,7 +1052,7 @@ h3 {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--red) 12%, #fff);
+  background: color-mix(in srgb, var(--red) 22%, var(--card));
   color: var(--red-ink);
 }
 .rule strong {
@@ -1137,10 +1138,10 @@ h3 {
 
 /* ---------- Request form ---------- */
 .rform {
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
   border-radius: 26px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   box-shadow: 8px 8px 0 var(--gold);
   padding: clamp(20px, 3vw, 32px);
   min-width: 0;
@@ -1241,7 +1242,7 @@ h3 {
   border-radius: 14px;
   background: linear-gradient(135deg, var(--gold), #ffd977);
   color: var(--ink);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
 }
 .stub__k {
   font-family: var(--f-pixel);
@@ -1345,7 +1346,7 @@ h3 {
 .arow__img {
   aspect-ratio: 16 / 10;
   border-radius: 26px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   box-shadow: 8px 8px 0 var(--gold);
 }
 .arow--flip .arow__img {
@@ -1403,9 +1404,9 @@ h3 {
 .seg button {
   min-height: 46px;
   padding: 0 20px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   border-radius: 999px;
-  background: #fff;
+  background: var(--card);
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.04em;
@@ -1423,7 +1424,7 @@ h3 {
 .filters button.is-on,
 .tabs button.is-on,
 .seg button.is-on {
-  background: var(--ink);
+  background: var(--navy);
   color: #fff;
 }
 .games {
@@ -1436,10 +1437,10 @@ h3 {
   gap: 6px;
   align-content: start;
   padding: 18px;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: 16px;
-  box-shadow: 0 4px 0 var(--ink);
+  box-shadow: 0 4px 0 var(--navy);
 }
 .game strong {
   font-family: var(--f-display);
@@ -1506,8 +1507,8 @@ h3 {
   gap: 14px;
   align-content: start;
   padding: 28px 24px 24px;
-  background: #fff;
-  border: 3px solid var(--ink);
+  background: var(--card);
+  border: 3px solid var(--edge);
   border-radius: 24px;
   box-shadow: 0 8px 0 var(--c);
 }
@@ -1540,7 +1541,7 @@ h3 {
   right: 18px;
   padding: 6px 14px;
   background: var(--gold);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   border-radius: 999px;
   font-weight: 700;
   font-size: 13px;
@@ -1588,8 +1589,8 @@ h3 {
   gap: 8px;
   align-content: start;
   padding: 24px;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
 }
 .steps__n {
@@ -1714,8 +1715,8 @@ h3 {
   gap: 8px;
   align-content: start;
   padding: 22px;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
 }
 .nights__day {
@@ -1759,7 +1760,7 @@ h3 {
   gap: 8px;
   padding: 10px 16px;
   border-radius: 999px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   font-weight: 700;
 }
 .chips svg {
@@ -1773,7 +1774,7 @@ h3 {
   border-radius: 26px;
   background: var(--navy);
   color: #fff;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   box-shadow: 8px 8px 0 var(--red);
 }
 .perk__card svg {
@@ -1800,7 +1801,7 @@ h3 {
   margin: 0;
   aspect-ratio: 4 / 3;
   border-radius: 26px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   box-shadow: 8px 8px 0 var(--gold);
 }
 .menu__photo figcaption {
@@ -1808,8 +1809,8 @@ h3 {
   left: 12px;
   bottom: 12px;
   padding: 7px 14px;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: 999px;
   font-weight: 700;
   font-size: 14px;
@@ -1873,8 +1874,8 @@ h3 {
   gap: 14px;
   align-items: start;
   padding: 20px;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
   box-shadow: 0 5px 0 var(--red);
 }
@@ -1931,10 +1932,10 @@ h3 {
   gap: 10px;
   align-content: start;
   padding: 26px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
   box-shadow: 0 6px 0 var(--cyan);
-  background: #fff;
+  background: var(--card);
 }
 .info__card svg {
   color: var(--red);
@@ -1956,7 +1957,7 @@ h3 {
 .inside__img {
   aspect-ratio: 16 / 10;
   border-radius: 26px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   box-shadow: 8px 8px 0 var(--red);
 }
 .inside__list {
@@ -1984,8 +1985,8 @@ h3 {
   max-width: 860px;
 }
 .faq li {
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: 16px;
   overflow: hidden;
 }
@@ -2035,8 +2036,8 @@ h3 {
   display: grid;
   gap: 14px;
   padding: 24px;
-  background: #fff;
-  border: 2px solid var(--ink);
+  background: var(--card);
+  border: 2px solid var(--edge);
   border-radius: var(--radius);
 }
 .next h3 {
@@ -2069,7 +2070,7 @@ h3 {
   height: 28px;
   border-radius: 50%;
   background: var(--gold);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   font-family: var(--f-display);
   font-size: 14px;
 }
@@ -2173,7 +2174,7 @@ h3 {
     display: grid;
     gap: 4px;
     padding: 12px var(--gutter) 20px;
-    background: #fff;
+    background: var(--card);
     border-top: 2px solid var(--line);
   }
   .sheet a:not(.btn) {
@@ -2358,7 +2359,7 @@ h3 {
     z-index: 90;
     display: block;
     padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(to top, #fff 60%, rgba(255, 255, 255, 0));
+    background: linear-gradient(to top, var(--paper) 60%, rgba(6, 13, 54, 0));
     pointer-events: none;
   }
   .dock .btn {
