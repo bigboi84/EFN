@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X, Clock, Gift, Tag } from "lucide-react";
+import { Menu, X, MapPin } from "lucide-react";
 import { NAV, type PageId } from "../data";
-import { Btn, Coin } from "./kit";
+import { Btn } from "./kit";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <a href="#" className={`logo${light ? " logo--light" : ""}`} aria-label="EFN Arena home">
-      <Coin size={34} />
-      <span className="logo__words">
+      <span className="logo__tag">
         <span className="logo__efn">EFN</span>
         <span className="logo__arena">ARENA</span>
       </span>
     </a>
   );
 }
+
+const LEFT: PageId[] = ["play", "birthdays", "groups", "leagues", "eat"];
+const RIGHT: PageId[] = ["cards", "deals"];
 
 export function Header({ page }: { page: PageId | "home" }) {
   const [open, setOpen] = useState(false);
@@ -29,41 +31,38 @@ export function Header({ page }: { page: PageId | "home" }) {
 
   useEffect(() => setOpen(false), [page]);
 
+  const link = (id: PageId) => {
+    const n = NAV.find((x) => x.id === id)!;
+    return (
+      <a key={id} href={`#${id}`} className={page === id ? "is-on" : ""} aria-current={page === id ? "page" : undefined}>
+        {n.label}
+      </a>
+    );
+  };
+
   return (
     <header className={`hdr${scrolled ? " is-scrolled" : ""}`}>
-      <div className="util">
-        <div className="wrap util__in">
-          <p className="util__hours">
-            <Clock size={14} /> Open daily. Hours and address announced at launch
-          </p>
-          <nav className="util__links" aria-label="Quick links">
-            <a href="#cards">
-              <Gift size={14} /> Gift &amp; play cards
-            </a>
-            <a href="#deals">
-              <Tag size={14} /> Deals
-            </a>
-          </nav>
-        </div>
-      </div>
       <div className="bar">
-        <div className="wrap bar__in">
-          <Logo />
-          <nav className="nav" aria-label="Main">
-            {NAV.map((n) => (
-              <a key={n.id} href={`#${n.id}`} className={page === n.id ? "is-on" : ""} aria-current={page === n.id ? "page" : undefined}>
-                {n.label}
-              </a>
-            ))}
+        <div className="bar__in">
+          <button className="menu-btn" onClick={() => setOpen((o) => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+            {open ? <X size={26} /> : <Menu size={26} />}
+          </button>
+          <nav className="nav nav--l" aria-label="Main">
+            {LEFT.map(link)}
           </nav>
-          <div className="bar__right">
-            <Btn href="#book" small>
-              Book now
-            </Btn>
-            <button className="menu-btn" onClick={() => setOpen((o) => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </div>
+          <Logo />
+          <nav className="nav nav--r" aria-label="More">
+            <a href="#book" className={page === "book" ? "is-on is-strong" : "is-strong"}>
+              Book a table
+            </a>
+            {RIGHT.map(link)}
+            <a href="#visit" className="nav__pill">
+              <MapPin size={16} /> Visit
+            </a>
+          </nav>
+          <Btn href="#book" small className="bar__book">
+            Book now
+          </Btn>
         </div>
       </div>
       <AnimatePresence>

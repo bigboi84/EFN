@@ -7,29 +7,47 @@ import { usePlan } from "../lib/plan";
 import { Btn, Coin, Head, Marquee, Reveal, Sec, ease } from "../components/kit";
 import { RequestForm } from "../components/RequestForm";
 
+const TABS: { id: string; label: string; kinds: BookKind[] }[] = [
+  { id: "act", label: "Activities", kinds: ["table", "league", "gameshow"] },
+  { id: "bday", label: "Birthdays", kinds: ["birthday"] },
+  { id: "event", label: "Events", kinds: ["group"] },
+];
+
+const ACT_HREF: Record<string, string> = { floor: "#play", pc: "#play", sofa: "#play", show: "#groups", stage: "#leagues", party: "#birthdays" };
+
 function PlanWidget() {
   const { plan, setPlan } = usePlan();
-  const [kind, setKind] = useState<BookKind>(plan.kind);
+  const [tab, setTab] = useState(TABS[0]);
+  const [kind, setKind] = useState<BookKind>(plan.kind in { table: 1, league: 1, gameshow: 1 } ? plan.kind : "table");
   const [date, setDate] = useState(plan.date);
-  const [size, setSize] = useState(plan.size);
   const today = new Date().toISOString().slice(0, 10);
+  const options = PLAN_OPTIONS.filter((o) => tab.kinds.includes(o.kind));
+
+  const pick = (t: (typeof TABS)[number]) => {
+    setTab(t);
+    setKind(t.kinds[0]);
+  };
 
   const go = (e: FormEvent) => {
     e.preventDefault();
-    setPlan({ kind, date, size });
+    setPlan({ kind, date, size: plan.size });
     window.location.hash = "book";
   };
 
   return (
-    <motion.form className="plan" onSubmit={go} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.5 }} aria-label="Plan your visit">
-      <p className="plan__k">
-        <Coin size={22} /> What are we playing today?
-      </p>
-      <div className="plan__grid">
+    <motion.div className="plan" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.5 }}>
+      <div className="plan__tabs" role="tablist" aria-label="What are you planning?">
+        {TABS.map((t) => (
+          <button key={t.id} type="button" role="tab" aria-selected={tab.id === t.id} className={tab.id === t.id ? "is-on" : ""} onClick={() => pick(t)}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <form className="plan__bar" onSubmit={go} aria-label="Plan your visit">
         <label className="plan__f">
-          <span>I'm planning</span>
+          <span>What are we playing today?</span>
           <select value={kind} onChange={(e) => setKind(e.target.value as BookKind)}>
-            {PLAN_OPTIONS.map((o) => (
+            {options.map((o) => (
               <option key={o.kind} value={o.kind}>
                 {o.label}
               </option>
@@ -37,18 +55,12 @@ function PlanWidget() {
           </select>
         </label>
         <label className="plan__f">
-          <span>Date</span>
+          <span>Select a date</span>
           <input type="date" min={today} value={date} onChange={(e) => setDate(e.target.value)} />
         </label>
-        <label className="plan__f">
-          <span>How many people?</span>
-          <input type="number" min={1} inputMode="numeric" placeholder="e.g. 8" value={size} onChange={(e) => setSize(e.target.value)} />
-        </label>
-        <Btn type="submit">
-          Plan my visit <ArrowRight size={18} />
-        </Btn>
-      </div>
-    </motion.form>
+        <Btn type="submit">Book now</Btn>
+      </form>
+    </motion.div>
   );
 }
 
@@ -73,48 +85,39 @@ export function Home() {
   return (
     <>
       <section className="hero">
-        <div className="hero__media" aria-hidden="true">
-          {reduce ? (
-            <Photo name="oval-wide" alt="" eager />
-          ) : (
-            <video ref={video} className="hero__video" poster={mediaUrl("hero-poster.webp")} autoPlay muted loop playsInline preload="auto">
-              {hasMedia("hero-loop.webm") && <source src={mediaUrl("hero-loop.webm")} type="video/webm" />}
-              {hasMedia("hero-loop.mp4") && <source src={mediaUrl("hero-loop.mp4")} type="video/mp4" />}
-            </video>
+        <div className="hero__card">
+          <div className="hero__media" aria-hidden="true">
+            {reduce ? (
+              <Photo name="oval-wide" alt="" eager />
+            ) : (
+              <video ref={video} className="hero__video" poster={mediaUrl("hero-poster.webp")} autoPlay muted loop playsInline preload="auto">
+                {hasMedia("hero-loop.webm") && <source src={mediaUrl("hero-loop.webm")} type="video/webm" />}
+                {hasMedia("hero-loop.mp4") && <source src={mediaUrl("hero-loop.mp4")} type="video/mp4" />}
+              </video>
+            )}
+            <div className="hero__shade" />
+          </div>
+          <div className="hero__in">
+            <motion.h1 className="hero__h1" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.1 }}>
+              Awesome awaits
+              <br />
+              at EFN Arena
+            </motion.h1>
+            <motion.p className="hero__lede" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.25 }}>
+              32 console stations, a real game show set, a stage and a wood-fired kitchen. Gaming, game shows and food in Trinidad &amp; Tobago. All under one roof. Let the fun begin.
+            </motion.p>
+            <PlanWidget />
+          </div>
+          {!reduce && (
+            <button className="hero__pause" onClick={toggle} aria-label={playing ? "Pause background video" : "Play background video"}>
+              {playing ? <Pause size={16} /> : <Play size={16} />}
+            </button>
           )}
-          <div className="hero__shade" />
         </div>
-        <div className="wrap hero__in">
-          <motion.p className="eyebrow eyebrow--light" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease, delay: 0.1 }}>
-            Gaming · Game shows · Food · Trinidad &amp; Tobago
-          </motion.p>
-          <motion.h1 className="hero__h1" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.18 }}>
-            Play big.
-            <br />
-            Eat well.
-            <br />
-            <span>Win loud.</span>
-          </motion.h1>
-          <motion.p className="hero__lede" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.3 }}>
-            EFN Arena puts 32 console stations, a game show set, a stage and a wood-fired kitchen under one roof. Come for a game, stay for the pizza.
-          </motion.p>
-          <motion.div className="row" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease, delay: 0.4 }}>
-            <Btn href="#book">Book now</Btn>
-            <Btn href="#play" tone="white">
-              See what's on
-            </Btn>
-          </motion.div>
-        </div>
-        {!reduce && (
-          <button className="hero__pause" onClick={toggle} aria-label={playing ? "Pause background video" : "Play background video"}>
-            {playing ? <Pause size={16} /> : <Play size={16} />}
-          </button>
-        )}
+        <a href="#whats-on" className="hero__more">
+          Click for details
+        </a>
       </section>
-
-      <div className="wrap plan-wrap">
-        <PlanWidget />
-      </div>
 
       <Sec id="whats-on">
         <Head
@@ -133,17 +136,13 @@ export function Home() {
         />
         <div className="acts">
           {ACTIVITIES.map((a, i) => (
-            <Reveal key={a.id} delay={(i % 3) * 0.06}>
-              <a href="#play" className="act">
-                <span className="act__img">
-                  <Photo name={a.image} alt="" sizes="(max-width: 720px) 100vw, 33vw" />
-                </span>
+            <Reveal key={a.id} delay={(i % 3) * 0.06} className={`acts__cell acts__cell--${i}`}>
+              <a href={ACT_HREF[a.id] ?? "#play"} className="act">
+                <Photo name={a.image} alt="" sizes={i === 0 || i === 5 ? "(max-width: 720px) 100vw, 66vw" : "(max-width: 720px) 100vw, 33vw"} />
                 <span className="act__body">
-                  <span className="act__tag">{a.tag}</span>
                   <span className="act__name">{a.name}</span>
-                  <span className="act__go">
-                    Explore <ArrowRight size={16} />
-                  </span>
+                  <span className="act__blurb">{a.blurb}</span>
+                  <span className="act__btn">Learn more</span>
                 </span>
               </a>
             </Reveal>

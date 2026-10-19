@@ -102,6 +102,7 @@ export function Btn({
   onClick,
   type,
   disabled,
+  className = "",
 }: {
   href?: string;
   tone?: "red" | "gold" | "navy" | "ghost" | "white";
@@ -110,8 +111,9 @@ export function Btn({
   onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
+  className?: string;
 }) {
-  const cls = `btn btn--${tone}${small ? " btn--sm" : ""}`;
+  const cls = `btn btn--${tone}${small ? " btn--sm" : ""}${className ? ` ${className}` : ""}`;
   if (href) {
     return (
       <a href={href} className={cls}>

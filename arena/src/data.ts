@@ -12,7 +12,7 @@ export const NAV: { id: PageId; label: string }[] = [
   { id: "groups", label: "Groups & Events" },
   { id: "leagues", label: "Leagues" },
   { id: "eat", label: "Eat & Drink" },
-  { id: "cards", label: "Cards" },
+  { id: "cards", label: "Gift Cards" },
   { id: "deals", label: "Deals" },
   { id: "visit", label: "Visit" },
 ];
